@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Intelligent Tutor Agents</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Week 5 / Multi-Agent Lab</p>
+          <h1>Intelligent Tutor</h1>
+        </div>
+        <div class="theme-badge">Dynamic-Agent Theme</div>
+      </header>
+
+      <main class="workspace">
+        <aside class="panel left-panel">
+          <div class="panel-header">
+            <h2>Agent Buttons</h2>
+            <span class="mini-tag">ON / OFF</span>
+          </div>
+
+          <div id="agentList" class="agent-list" aria-label="Agent controls"></div>
+        </aside>
+
+        <section class="panel center-panel">
+          <div class="prompt-box">
+            <label for="userInput">Ask your tutor team</label>
+            <textarea id="userInput" rows="4" placeholder="Example: Explain why the area of a rectangle grows faster than its perimeter."></textarea>
+            <div class="actions">
+              <button id="runAgentsBtn" class="primary-btn">Run Agents</button>
+            </div>
+          </div>
+
+          <div class="results-header">
+            <h2>Agent Results</h2>
+            <span class="mini-tag success">Live Output</span>
+          </div>
+          <div id="results" class="results" aria-live="polite"></div>
+        </section>
+
+        <aside class="panel right-panel">
+          <div class="panel-header">
+            <h2>Workflow Trace</h2>
+            <span class="mini-tag neutral">Director's Notebook</span>
+          </div>
+          <div id="workflowTrace" class="trace" aria-live="polite"></div>
+        </aside>
+      </main>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
