@@ -1,0 +1,16 @@
+{
+  "name": "Intelligent Tutor Agents",
+  "short_name": "Tutor Agents",
+  "description": "A colorful multi-agent learning app for math, science, and history tutoring.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#fff6fb",
+  "theme_color": "#7c5cff",
+  "icons": [
+    {
+      "src": "https://www.google.com/s2/favicons?domain=example.com",
+      "sizes": "64x64",
+      "type": "image/png"
+    }
+  ]
+}
