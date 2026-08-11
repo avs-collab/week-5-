@@ -225,6 +225,52 @@ window.addEventListener('appinstalled', () => {
   if (installBtn) installBtn.setAttribute('aria-hidden', 'true');
 });
 
+// Snackbar helpers: lightweight user-facing guidance when prompt isn't available
+const snackbar = document.getElementById('snackbar');
+const snackbarMessage = document.getElementById('snackbar-message');
+const snackbarAction = document.getElementById('snackbar-action');
+const snackbarClose = document.getElementById('snackbar-close');
+
+function showSnackbar(message, { actionText = 'How to install', action = null, duration = 9000 } = {}) {
+  if (!snackbar) return;
+  snackbarMessage.textContent = message;
+  if (action && snackbarAction) {
+    snackbarAction.style.display = '';
+    snackbarAction.textContent = actionText;
+    snackbarAction.onclick = action;
+  } else if (snackbarAction) {
+    snackbarAction.style.display = '';
+    snackbarAction.onclick = () => window.open('https://developer.chrome.com/docs/web/fundamentals/app-install-banners/', '_blank');
+  }
+  snackbar.setAttribute('aria-hidden', 'false');
+  if (snackbarClose) snackbarClose.onclick = hideSnackbar;
+  if (duration > 0) setTimeout(hideSnackbar, duration);
+}
+
+function hideSnackbar() {
+  if (!snackbar) return;
+  snackbar.setAttribute('aria-hidden', 'true');
+}
+
+// If the beforeinstallprompt never fires, give the user a hint after a few seconds
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    const installVisible = installBtn && installBtn.getAttribute('aria-hidden') === 'false';
+    if (!installVisible && !window.deferredPrompt) {
+      showSnackbar("Install the app from the browser menu or click 'How to install' for steps.", {});
+    }
+  }, 2500);
+});
+
+// If user clicks Install but prompt isn't present, show the snackbar
+if (installBtn) {
+  installBtn.addEventListener('click', (e) => {
+    if (!window.deferredPrompt) {
+      showSnackbar('The install prompt is not available in this browser session. Open the browser menu and choose "Install" or check the instructions.', {});
+    }
+  });
+}
+
 renderAgentControls();
 renderTrace([]);
 renderResults([]);
