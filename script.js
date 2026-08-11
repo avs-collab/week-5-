@@ -191,6 +191,40 @@ if ('serviceWorker' in navigator) {
   });
 }
 
+// PWA install button handling
+const installBtn = document.getElementById('installBtn');
+window.deferredPrompt = null;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  // Prevent the mini-infobar from appearing on mobile
+  e.preventDefault();
+  window.deferredPrompt = e;
+  if (installBtn) {
+    installBtn.setAttribute('aria-hidden', 'false');
+  }
+});
+
+if (installBtn) {
+  installBtn.addEventListener('click', async () => {
+    if (!window.deferredPrompt) return;
+    installBtn.setAttribute('aria-hidden', 'true');
+    window.deferredPrompt.prompt();
+    const choiceResult = await window.deferredPrompt.userChoice;
+    if (choiceResult && choiceResult.outcome === 'accepted') {
+      console.log('User accepted the A2HS prompt');
+      workflowTraceEl.innerHTML = '<div class="trace-step">User installed the app.</div>' + workflowTraceEl.innerHTML;
+    } else {
+      console.log('User dismissed the A2HS prompt');
+    }
+    window.deferredPrompt = null;
+  });
+}
+
+window.addEventListener('appinstalled', () => {
+  console.log('App installed');
+  if (installBtn) installBtn.setAttribute('aria-hidden', 'true');
+});
+
 renderAgentControls();
 renderTrace([]);
 renderResults([]);
